@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "poetry-demo"
+version = "0.1.0"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+requests = "^2.31"
+fastapi = {version = "0.104.1", extras = ["all"]}
+mylib = {git = "https://github.com/x/mylib.git", rev = "abcdef1"}
+localdep = {path = "../localdep"}
+starlette = "*"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.4"
+
+[[tool.poetry.source]]
+name = "acme"
+url = "https://pypi.acme.corp/simple"
+priority = "supplemental"

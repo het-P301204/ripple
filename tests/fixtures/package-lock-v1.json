@@ -1,0 +1,10 @@
+{
+  "name": "legacy-app",
+  "lockfileVersion": 1,
+  "requires": true,
+  "dependencies": {
+    "express": {"version": "4.17.1", "resolved": "https://registry.npmjs.org/express/-/express-4.17.1.tgz", "integrity": "sha512-XXX", "requires": {"accepts": "~1.3.7"}},
+    "accepts": {"version": "1.3.7", "resolved": "https://registry.npmjs.org/accepts/-/accepts-1.3.7.tgz", "integrity": "sha512-YYY"},
+    "jest": {"version": "26.0.0", "resolved": "https://registry.npmjs.org/jest/-/jest-26.0.0.tgz", "integrity": "sha512-ZZZ", "dev": true}
+  }
+}

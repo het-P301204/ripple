@@ -1,0 +1,19 @@
+{
+  "_meta": {
+    "hash": {"sha256": "abc"},
+    "pipfile-spec": 6,
+    "sources": [
+      {"name": "pypi", "url": "https://pypi.org/simple", "verify_ssl": true},
+      {"name": "internal", "url": "http://pypi.acme.corp/simple", "verify_ssl": false}
+    ]
+  },
+  "default": {
+    "requests": {"hashes": ["sha256:aaa", "sha256:bbb"], "index": "pypi", "version": "==2.31.0"},
+    "acme-lib": {"hashes": ["sha256:ccc"], "index": "internal", "version": "==1.0.0"},
+    "flask": {"version": ">=2.0"},
+    "vcsdep": {"git": "https://github.com/x/vcsdep.git", "ref": "abc1234"}
+  },
+  "develop": {
+    "pytest": {"hashes": ["sha256:ddd"], "index": "pypi", "version": "==7.4.0"}
+  }
+}

@@ -1,0 +1,6 @@
+github.com/gin-gonic/gin v1.9.1 h1:GINHASH=
+github.com/gin-gonic/gin v1.9.1/go.mod h1:GINMODHASH=
+golang.org/x/text v0.14.0 h1:TEXTHASH=
+golang.org/x/text v0.14.0/go.mod h1:TEXTMODHASH=
+github.com/stretchr/testify v1.8.4 h1:TESTIFYHASH=
+corp.internal/platform/auth v1.2.0 h1:AUTHHASH=

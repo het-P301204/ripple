@@ -1,0 +1,15 @@
+# sample requirements
+--index-url https://pypi.acme.corp/simple
+--extra-index-url https://pypi.org/simple
+-r base.txt
+requests==2.31.0 \
+    --hash=sha256:aaaa \
+    --hash=sha256:bbbb
+Flask[async]>=2.3,<3 ; python_version >= "3.9"
+Django~=4.2  # web
+Pillow_Extra==10.0.0
+numpy
+git+https://github.com/example-labs/pdfx.git@main#egg=pdfx
+-e ./libs/common-lib
+urllib3==2.0.4
+    # via requests

@@ -1,0 +1,10 @@
+[project]
+name = "demo-service"
+version = "0.1.0"
+dependencies = ["requests>=2.28", "pydantic==2.5.0", "Uvicorn[standard]~=0.24"]
+
+[project.optional-dependencies]
+docs = ["mkdocs>=1.5"]
+
+[dependency-groups]
+dev = ["pytest>=7", "ruff"]

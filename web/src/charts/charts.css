@@ -1,0 +1,19 @@
+/* Attack-surface visuals. Transform / opacity / dashoffset only. */
+.as-ring {
+  position: absolute; inset: -1px; border-radius: inherit; border: 1px solid var(--rc, rgb(var(--c-accent-soft))); opacity: 0; pointer-events: none;
+  animation: as-ring 1.9s cubic-bezier(.22, 1, .36, 1) var(--rd, 0ms) 2 both;
+}
+@keyframes as-ring { 0% { transform: scale(1); opacity: .55; } 100% { transform: scale(1.22, 1.55); opacity: 0; } }
+
+.as-dash { stroke-dasharray: 4 6; animation: as-dash 1.5s linear infinite; }
+@keyframes as-dash { to { stroke-dashoffset: -20; } }
+
+.as-burst { transform-box: fill-box; transform-origin: center; opacity: 0; animation: net-pulse 1.7s cubic-bezier(.22, 1, .36, 1) var(--bd, 0ms) 1 both; }
+
+@media (prefers-reduced-motion: reduce) {
+  .as-ring, .as-burst { display: none; }
+  .as-dash { animation: none; }
+}
+
+html[data-motion='reduced'] .as-ring, html[data-motion='reduced'] .as-burst { display: none; }
+html[data-motion='reduced'] .as-dash { animation: none; }

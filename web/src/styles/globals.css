@@ -1,0 +1,134 @@
+@import './tokens.css';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * { -webkit-tap-highlight-color: transparent; }
+  html { background: rgb(var(--c-bg)); }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background: rgb(var(--c-bg));
+    color: rgb(var(--c-ink));
+    font-family: var(--font-sans);
+    font-size: 14px;
+    line-height: 1.5;
+    font-feature-settings: 'cv11', 'ss01', 'calt';
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+  #root { min-height: 100vh; }
+  h1, h2, h3, h4 { margin: 0; letter-spacing: -0.02em; font-weight: 600; }
+  p { margin: 0; }
+  button { font: inherit; color: inherit; }
+  ::selection { background: rgb(var(--c-accent) / .35); color: white; }
+  a { color: inherit; text-decoration: none; }
+
+  /* Visible violet focus ring for all keyboard interaction */
+  :focus { outline: none; }
+  :focus-visible {
+    outline: none;
+    box-shadow: var(--shadow-focus);
+  }
+  input:focus-visible, textarea:focus-visible, select:focus-visible { box-shadow: none; }
+
+  /* Quiet scrollbars */
+  * { scrollbar-width: thin; scrollbar-color: rgba(255,255,255,.12) transparent; }
+  *::-webkit-scrollbar { width: 10px; height: 10px; }
+  *::-webkit-scrollbar-thumb { background: rgba(255,255,255,.10); border-radius: 10px; border: 3px solid transparent; background-clip: content-box; }
+  *::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,.18); background-clip: content-box; }
+}
+
+@layer components {
+  .mono { font-family: var(--font-mono); font-feature-settings: 'zero'; letter-spacing: -0.01em; }
+  .eyebrow { font-size: 11px; letter-spacing: .12em; text-transform: uppercase; font-weight: 500; color: rgb(var(--c-ink-3)); }
+  .surface { background: rgb(var(--c-card)); border: 1px solid var(--line); border-radius: var(--r-3); box-shadow: var(--shadow-card); }
+  .surface-elevated { background: rgb(var(--c-elevated)); border: 1px solid var(--line-2); border-radius: var(--r-3); box-shadow: var(--shadow-pop); }
+  .tnum { font-variant-numeric: tabular-nums; }
+  .page-x { padding-left: 20px; padding-right: 20px; }
+  @media (min-width: 768px) { .page-x { padding-left: 32px; padding-right: 32px; } }
+}
+
+/* ---------- Ambient: static grain tile + faint radial light ----------
+   Perf notes: the grain is a pre-rendered 96px alpha-noise PNG tile (no feTurbulence, no mix-blend-mode); the light is a static
+   gradient (no drift animation, no blur filter). Both are fixed, never repainted, and skipped entirely in reduced-animations mode. */
+.ambient-grain {
+  position: fixed; inset: 0; pointer-events: none; z-index: 0; opacity: .30;
+  background-image: url('./grain.png'); background-size: 96px 96px;
+}
+.ambient-light {
+  position: fixed; inset: 0; pointer-events: none; z-index: 0;
+  background:
+    radial-gradient(53% 48% at 81% -9%, rgb(var(--c-accent) / .075), transparent 70%),
+    radial-gradient(42% 42% at -3% 109%, rgb(var(--c-magenta) / .035), transparent 70%);
+}
+
+/* ---------- Ripple motion primitives ---------- */
+@keyframes ripple-ring {
+  0% { transform: scale(.2); opacity: 0; }
+  12% { opacity: var(--ring-max, .55); }
+  100% { transform: scale(1); opacity: 0; }
+}
+@keyframes logo-ring {
+  0% { transform: scale(1); opacity: 0; }
+  10% { opacity: .7; }
+  100% { transform: scale(1.75); opacity: 0; }
+}
+@keyframes net-pulse {
+  0% { transform: scale(.4); opacity: 0; }
+  20% { opacity: .5; }
+  100% { transform: scale(1); opacity: 0; }
+}
+
+/* Responsive table -> stacked cards below 768px (see ui/Table.tsx) */
+@media (max-width: 767px) {
+  .rt-responsive thead { display: none; }
+  .rt-responsive, .rt-responsive tbody { display: block; width: 100%; }
+  .rt-responsive tr { display: block; padding: 14px 16px; height: auto; }
+  .rt-responsive td { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 5px 0; text-align: left; }
+  .rt-responsive td[data-label]::before { content: attr(data-label); font-size: 12px; color: rgb(var(--c-ink-3)); flex-shrink: 0; }
+}
+@keyframes btn-ripple {
+  from { transform: translate(-50%, -50%) scale(0); opacity: .45; }
+  to { transform: translate(-50%, -50%) scale(1); opacity: 0; }
+}
+@keyframes crit-pulse {
+  0%, 82%, 100% { box-shadow: 0 0 0 0 rgb(var(--sev-critical) / 0); }
+  88% { box-shadow: 0 0 0 3px rgb(var(--sev-critical) / .32); }
+  100% { box-shadow: 0 0 0 7px rgb(var(--sev-critical) / 0); }
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.skeleton {
+  background: rgba(255,255,255,.055);
+  animation: skel-pulse 1.8s ease-in-out infinite; /* opacity only: no per-frame background repaint */
+  border-radius: var(--r-1);
+}
+@keyframes skel-pulse { 0%, 100% { opacity: 1; } 50% { opacity: .5; } }
+
+/* ---------- Reduced motion ----------
+   Two triggers, one look: the OS media query (applies before JS runs) and <html data-motion="reduced"> (app setting, low-power
+   default, FPS guard; set by src/lib/perf.ts and it already folds in the OS preference). Animations jump to their end state
+   instantly (so fill-forwards entrances still land), looping ones stop, class-driven transitions shorten to 120ms. Spinners keep
+   turning because they are feedback, not decoration. Components additionally consult useReducedMotion() to skip ambient layers. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .skeleton { animation: none; }
+}
+html[data-motion='reduced'] *, html[data-motion='reduced'] *::before, html[data-motion='reduced'] *::after {
+  animation-duration: 0.001ms !important;
+  animation-delay: 0s !important;
+  animation-iteration-count: 1 !important;
+  scroll-behavior: auto !important;
+}
+html[data-motion='reduced'] .animate-spin { animation-duration: 900ms !important; animation-iteration-count: infinite !important; }
+html[data-motion='reduced'] [class*='duration-'],
+html[data-motion='reduced'] [style*='transition'] { transition-duration: 120ms !important; }
+html[data-motion='reduced'] .skeleton { animation: none; }
+html[data-motion='reduced'] .ambient-grain { opacity: .22; }

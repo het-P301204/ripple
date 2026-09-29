@@ -1,0 +1,89 @@
+/* ==========================================================================
+   RIPPLE design tokens. Graphite (NOT navy). Violet primary, magenta secondary,
+   amber sparingly. Colours are stored as space-separated RGB triplets so Tailwind
+   can apply alpha: `bg-accent/20`. Use `rgb(var(--c-accent) / .2)` in raw CSS.
+   ========================================================================== */
+:root {
+  color-scheme: dark;
+
+  /* surfaces */
+  --c-bg: 9 10 11;            /* #090A0B */
+  --c-sidebar: 12 13 15;      /* #0C0D0F */
+  --c-card: 17 19 22;         /* #111316 */
+  --c-elevated: 21 23 26;     /* #15171A */
+
+  /* ink (text) */
+  --c-ink: 236 237 240;
+  --c-ink-2: 178 181 189;
+  --c-ink-3: 128 132 142;
+  --c-ink-4: 88 92 101;
+
+  /* accents */
+  --c-accent: 139 92 246;       /* #8B5CF6 */
+  --c-accent-soft: 167 139 250; /* #A78BFA */
+  --c-accent-deep: 109 68 224;
+  --c-magenta: 236 72 153;      /* #EC4899 */
+  --c-magenta-soft: 244 114 182;/* #F472B6 */
+  --c-amber: 245 158 11;        /* #F59E0B */
+  --c-ok: 74 190 140;
+
+  /* severity: base colour; soft triad (bg / border / text) below */
+  --sev-critical: 240 80 110;   /* #F0506E */
+  --sev-high: 249 115 22;       /* #F97316 */
+  --sev-medium: 245 158 11;     /* #F59E0B */
+  --sev-low: 163 190 84;        /* muted yellow-green */
+  --sev-info: 140 144 154;
+
+  --sev-critical-bg: rgb(var(--sev-critical) / .10);
+  --sev-critical-border: rgb(var(--sev-critical) / .28);
+  --sev-critical-text: #F58095;
+  --sev-high-bg: rgb(var(--sev-high) / .10);
+  --sev-high-border: rgb(var(--sev-high) / .28);
+  --sev-high-text: #FB9A55;
+  --sev-medium-bg: rgb(var(--sev-medium) / .09);
+  --sev-medium-border: rgb(var(--sev-medium) / .26);
+  --sev-medium-text: #F5B942;
+  --sev-low-bg: rgb(var(--sev-low) / .09);
+  --sev-low-border: rgb(var(--sev-low) / .24);
+  --sev-low-text: #B5CB7A;
+  --sev-info-bg: rgb(var(--sev-info) / .09);
+  --sev-info-border: rgb(var(--sev-info) / .22);
+  --sev-info-text: #A3A7B0;
+
+  /* hairlines */
+  --line: rgba(255, 255, 255, 0.06);
+  --line-2: rgba(255, 255, 255, 0.085);
+  --line-strong: rgba(255, 255, 255, 0.12);
+
+  /* radii */
+  --r-1: 8px;
+  --r-2: 12px;
+  --r-3: 16px;
+  --r-4: 20px;
+  --r-5: 24px;
+
+  /* spacing scale (4px base) */
+  --sp-1: 4px; --sp-2: 8px; --sp-3: 12px; --sp-4: 16px; --sp-5: 20px;
+  --sp-6: 24px; --sp-8: 32px; --sp-10: 40px; --sp-12: 48px; --sp-16: 64px;
+
+  /* shadows: matte, layered, low-key */
+  --shadow-card: 0 1px 0 rgba(255,255,255,.03) inset, 0 8px 24px -12px rgba(0,0,0,.55);
+  --shadow-pop: 0 1px 0 rgba(255,255,255,.05) inset, 0 24px 60px -16px rgba(0,0,0,.7), 0 0 0 1px rgba(255,255,255,.06);
+  --shadow-focus: 0 0 0 2px rgb(var(--c-bg)), 0 0 0 4px rgb(var(--c-accent-soft) / .75);
+  --glow-accent: 0 0 28px -4px rgb(var(--c-accent) / .45);
+
+  /* motion */
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-micro: 180ms;
+  --dur-comp: 280ms;
+  --dur-page: 420ms;
+  --dur-hero: 650ms;
+
+  /* layout */
+  --sidebar-w: 248px;
+  --topbar-h: 60px;
+
+  /* fonts */
+  --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
